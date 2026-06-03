@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Storage at the Lake of the Ozarks — Coming Soon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0D1F3C;
+    --lake: #1B6CA8;
+    --lake-light: #4A9FD4;
+    --white: #FFFFFF;
+    --text-muted: rgba(255,255,255,0.65);
+  }
+  html, body { height: 100%; font-family: 'DM Sans', sans-serif; }
+  body {
+    background-color: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(27,108,168,0.45) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 20% 80%, rgba(74,159,212,0.2) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 80% 90%, rgba(27,108,168,0.25) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .waves { position: fixed; bottom: 0; left: 0; width: 100%; height: 220px; z-index: 0; opacity: 0.18; }
+  .wave { position: absolute; bottom: 0; left: -50%; width: 200%; height: 160px; border-radius: 50%; animation: wave-anim 8s ease-in-out infinite; }
+  .wave:nth-child(1) { background: var(--lake); animation-duration: 8s; }
+  .wave:nth-child(2) { background: var(--lake-light); animation-duration: 10s; animation-delay: -2s; opacity: 0.7; height: 130px; }
+  .wave:nth-child(3) { background: var(--lake); animation-duration: 12s; animation-delay: -4s; opacity: 0.5; height: 100px; }
+  @keyframes wave-anim {
+    0%, 100% { transform: translateX(0) scaleY(1); }
+    50% { transform: translateX(-5%) scaleY(1.1); }
+  }
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    width: 90%;
+    text-align: center;
+    padding: 2rem;
+    animation: fade-up 0.9s ease both;
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lake-light);
+    border: 1px solid rgba(74,159,212,0.4);
+    border-radius: 100px;
+    padding: 5px 16px;
+    margin-bottom: 1.75rem;
+    animation: fade-up 0.9s 0.15s ease both;
+  }
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 0.6rem;
+    animation: fade-up 0.9s 0.25s ease both;
+  }
+  h1 span { color: var(--lake-light); }
+  .tagline {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    font-weight: 300;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    animation: fade-up 0.9s 0.35s ease both;
+  }
+  .form-wrap {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 2rem 2rem 1.75rem;
+    margin-bottom: 2rem;
+    animation: fade-up 0.9s 0.45s ease both;
+    backdrop-filter: blur(8px);
+  }
+  .form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    letter-spacing: 0.03em;
+  }
+  .form-row { display: flex; gap: 10px; }
+  input[type="email"] {
+    flex: 1;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 10px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    padding: 12px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="email"]::placeholder { color: rgba(255,255,255,0.35); }
+  input[type="email"]:focus { border-color: var(--lake-light); }
+  button[type="submit"] {
+    background: var(--lake);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    white-space: nowrap;
+  }
+  button[type="submit"]:hover { background: var(--lake-light); }
+  button[type="submit"]:active { transform: scale(0.97); }
+  button[type="submit"]:disabled { opacity: 0.6; cursor: not-allowed; }
+  .privacy-note { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 0.85rem; }
+  .success-msg {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 15px;
+    color: #6DD9A8;
+    padding: 0.5rem 0;
+  }
+  .error-msg {
+    font-size: 13px;
+    color: #F09595;
+    margin-top: 0.75rem;
+    display: none;
+  }
+  .footer-links { font-size: 13px; color: var(--text-muted); animation: fade-up 0.9s 0.55s ease both; }
+  .footer-links a { color: var(--lake-light); text-decoration: none; }
+  .footer-links a:hover { text-decoration: underline; }
+  .icon-wrap { margin-bottom: 1.5rem; animation: fade-up 0.9s 0.05s ease both; }
+  .icon-wrap svg { width: 52px; height: 52px; opacity: 0.9; }
+  @media (max-width: 480px) {
+    .form-row { flex-direction: column; }
+    button[type="submit"] { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="waves">
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="wave"></div>
+</div>
+<div class="container">
+  <div class="icon-wrap">
+    <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="52" height="52" rx="14" fill="rgba(27,108,168,0.35)"/>
+      <path d="M12 34 Q16 28 20 34 Q24 40 28 34 Q32 28 36 34 Q38 37 40 34" stroke="#4A9FD4" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M18 27 L26 18 L34 27" stroke="#4A9FD4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="22" y="22" width="8" height="8" rx="1" stroke="#4A9FD4" stroke-width="2"/>
+    </svg>
+  </div>
+  <div class="badge">Coming Soon</div>
+  <h1>Find Storage at the<br><span>Lake of the Ozarks</span></h1>
+  <p class="tagline">
+    Boat storage, self storage, RV storage — all in one place.<br>
+    We're putting the finishing touches on something great.
+  </p>
+  <div class="form-wrap">
+    <label class="form-label" for="email-input">Be the first to know when we launch</label>
+    <div class="form-row">
+      <input type="email" id="email-input" placeholder="your@email.com" autocomplete="email" aria-label="Email address">
+      <button type="submit" id="submit-btn" onclick="handleSubmit()">Notify me</button>
+    </div>
+    <div class="success-msg" id="success-msg" role="status" aria-live="polite">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#6DD9A8" stroke-width="1.5"/><path d="M5.5 9l2.5 2.5 4.5-5" stroke="#6DD9A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      You're on the list — we'll be in touch!
+    </div>
+    <p class="error-msg" id="error-msg"></p>
+    <p class="privacy-note">No spam, ever. Unsubscribe anytime.</p>
+  </div>
+  <p class="footer-links">
+    Questions? Email us at <a href="mailto:hello@findstoragelakeoftheozarks.com">hello@findstoragelakeoftheozarks.com</a>
+  </p>
+</div>
+<script>
+async function handleSubmit() {
+  const input = document.getElementById('email-input');
+  const btn = document.getElementById('submit-btn');
+  const success = document.getElementById('success-msg');
+  const errorMsg = document.getElementById('error-msg');
+  const row = input.parentElement;
+  const email = input.value.trim();
+
+  errorMsg.style.display = 'none';
+
+  if (!email || !email.includes('@')) {
+    input.style.borderColor = '#E24B4A';
+    input.focus();
+    setTimeout(() => input.style.borderColor = '', 1500);
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  try {
+    const res = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+
+    if (res.status === 409) {
+      errorMsg.textContent = 'That email is already on the list!';
+      errorMsg.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Notify me';
+      return;
+    }
+
+    if (!res.ok) throw new Error('Server error');
+
+    row.style.display = 'none';
+    success.style.display = 'flex';
+
+  } catch (e) {
+    errorMsg.textContent = 'Something went wrong — please try again.';
+    errorMsg.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Notify me';
+  }
+}
+
+document.getElementById('email-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') handleSubmit();
+});
+</script>
+</body>
+</html>
