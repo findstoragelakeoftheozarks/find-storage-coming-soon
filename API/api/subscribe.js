@@ -21,4 +21,31 @@ export default async function handler(req) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVid3lnYWNnaXJhc2Noa212ZWZ6Iiwicm9sZSI6I
+      'apikey': process.env.SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`,
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify({ email })
+  });
+
+  if (!supabaseRes.ok) {
+    const errText = await supabaseRes.text();
+    return new Response(JSON.stringify({ error: 'Supabase error', detail: errText }), { status: 500 });
+  }
+
+  await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${process.env.RESEND_API_KEY}`
+    },
+    body: JSON.stringify({
+      from: 'Find Storage <hello@findstoragelakeoftheozarks.com>',
+      to: 'hello@findstoragelakeoftheozarks.com',
+      subject: 'New waitlist signup',
+      text: `New signup: ${email}`
+    })
+  });
+
+  return new Response(JSON.stringify({ success: true }), { status: 200 });
+}
