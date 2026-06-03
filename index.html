@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,19 +6,14 @@
 <title>Find Storage at the Lake of the Ozarks | Boat, Self & RV Storage</title>
 <meta name="description" content="Find boat storage, self storage and RV storage at the Lake of the Ozarks, all in one place.">
 <meta name="robots" content="index, follow">
-
-<!-- Open Graph -->
 <meta property="og:title" content="Find Storage at the Lake of the Ozarks">
 <meta property="og:description" content="Find boat storage, self storage and RV storage at the Lake of the Ozarks, all in one place.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://findstoragelakeoftheozarks.com">
 <meta property="og:site_name" content="Find Storage at the Lake of the Ozarks">
-
-<!-- Twitter/X -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Find Storage at the Lake of the Ozarks">
 <meta name="twitter:description" content="Find boat storage, self storage and RV storage at the Lake of the Ozarks, all in one place.">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -107,11 +101,74 @@
     line-height: 1.6;
     animation: fade-up 0.9s 0.35s ease both;
   }
-  .footer-links { font-size: 13px; color: var(--text-muted); animation: fade-up 0.9s 0.45s ease both; }
+  .form-wrap {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 2rem 2rem 1.75rem;
+    margin-bottom: 2rem;
+    animation: fade-up 0.9s 0.45s ease both;
+    backdrop-filter: blur(8px);
+  }
+  .form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    letter-spacing: 0.03em;
+  }
+  .form-row { display: flex; gap: 10px; }
+  input[type="email"] {
+    flex: 1;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 10px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    padding: 12px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="email"]::placeholder { color: rgba(255,255,255,0.35); }
+  input[type="email"]:focus { border-color: var(--lake-light); }
+  button[type="submit"] {
+    background: var(--lake);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    white-space: nowrap;
+  }
+  button[type="submit"]:hover { background: var(--lake-light); }
+  button[type="submit"]:active { transform: scale(0.97); }
+  button[type="submit"]:disabled { opacity: 0.6; cursor: not-allowed; }
+  .privacy-note { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 0.85rem; }
+  .success-msg {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 15px;
+    color: #6DD9A8;
+    padding: 0.5rem 0;
+  }
+  .error-msg { font-size: 13px; color: #F09595; margin-top: 0.75rem; display: none; }
+  .footer-links { font-size: 13px; color: var(--text-muted); animation: fade-up 0.9s 0.55s ease both; }
   .footer-links a { color: var(--lake-light); text-decoration: none; }
   .footer-links a:hover { text-decoration: underline; }
   .icon-wrap { margin-bottom: 1.5rem; animation: fade-up 0.9s 0.05s ease both; }
   .icon-wrap svg { width: 52px; height: 52px; opacity: 0.9; }
+  @media (max-width: 480px) {
+    .form-row { flex-direction: column; }
+    button[type="submit"] { width: 100%; }
+  }
 </style>
 </head>
 <body>
@@ -135,9 +192,75 @@
     Boat storage, self storage, RV storage, all in one place.<br>
     We're putting the finishing touches on something great.
   </p>
+  <div class="form-wrap">
+    <label class="form-label" for="email-input">Be the first to know when we launch</label>
+    <div class="form-row">
+      <input type="email" id="email-input" placeholder="your@email.com" autocomplete="email" aria-label="Email address">
+      <button type="submit" id="submit-btn" onclick="handleSubmit()">Notify me</button>
+    </div>
+    <div class="success-msg" id="success-msg" role="status" aria-live="polite">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#6DD9A8" stroke-width="1.5"/><path d="M5.5 9l2.5 2.5 4.5-5" stroke="#6DD9A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      You're on the list — we'll be in touch!
+    </div>
+    <p class="error-msg" id="error-msg"></p>
+    <p class="privacy-note">No spam, ever. Unsubscribe anytime.</p>
+  </div>
   <p class="footer-links">
     Questions? Email us at <a href="mailto:hello@findstoragelakeoftheozarks.com">hello@findstoragelakeoftheozarks.com</a>
   </p>
 </div>
+<script>
+async function handleSubmit() {
+  const input = document.getElementById('email-input');
+  const btn = document.getElementById('submit-btn');
+  const success = document.getElementById('success-msg');
+  const errorMsg = document.getElementById('error-msg');
+  const row = input.parentElement;
+  const email = input.value.trim();
+
+  errorMsg.style.display = 'none';
+
+  if (!email || !email.includes('@')) {
+    input.style.borderColor = '#E24B4A';
+    input.focus();
+    setTimeout(() => input.style.borderColor = '', 1500);
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  try {
+    const res = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+
+    if (res.status === 409) {
+      errorMsg.textContent = 'That email is already on the list!';
+      errorMsg.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Notify me';
+      return;
+    }
+
+    if (!res.ok) throw new Error('Server error');
+
+    row.style.display = 'none';
+    success.style.display = 'flex';
+
+  } catch (e) {
+    errorMsg.textContent = 'Something went wrong — please try again.';
+    errorMsg.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Notify me';
+  }
+}
+
+document.getElementById('email-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') handleSubmit();
+});
+</script>
 </body>
 </html>
