@@ -51,4 +51,9 @@ export default async function handler(req) {
   });
 
   return new Response(JSON.stringify({ success: true }), { status: 200 });
+  return Response.json({
+  hasUrl: !!process.env.SUPABASE_URL,
+  hasAnonKey: !!process.env.SUPABASE_ANON_KEY,
+  hasServiceKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+});
 }
