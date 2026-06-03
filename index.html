@@ -1,1 +1,129 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Storage at the Lake of the Ozarks — Coming Soon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0D1F3C;
+    --lake: #1B6CA8;
+    --lake-light: #4A9FD4;
+    --white: #FFFFFF;
+    --text-muted: rgba(255,255,255,0.65);
+  }
+  html, body { height: 100%; font-family: 'DM Sans', sans-serif; }
+  body {
+    background-color: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(27,108,168,0.45) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 20% 80%, rgba(74,159,212,0.2) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 80% 90%, rgba(27,108,168,0.25) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .waves { position: fixed; bottom: 0; left: 0; width: 100%; height: 220px; z-index: 0; opacity: 0.18; }
+  .wave { position: absolute; bottom: 0; left: -50%; width: 200%; height: 160px; border-radius: 50%; animation: wave-anim 8s ease-in-out infinite; }
+  .wave:nth-child(1) { background: var(--lake); animation-duration: 8s; }
+  .wave:nth-child(2) { background: var(--lake-light); animation-duration: 10s; animation-delay: -2s; opacity: 0.7; height: 130px; }
+  .wave:nth-child(3) { background: var(--lake); animation-duration: 12s; animation-delay: -4s; opacity: 0.5; height: 100px; }
+  @keyframes wave-anim {
+    0%, 100% { transform: translateX(0) scaleY(1); }
+    50% { transform: translateX(-5%) scaleY(1.1); }
+  }
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    width: 90%;
+    text-align: center;
+    padding: 2rem;
+    animation: fade-up 0.9s ease both;
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lake-light);
+    border: 1px solid rgba(74,159,212,0.4);
+    border-radius: 100px;
+    padding: 5px 16px;
+    margin-bottom: 1.75rem;
+    animation: fade-up 0.9s 0.15s ease both;
+  }
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 0.6rem;
+    animation: fade-up 0.9s 0.25s ease both;
+  }
+  h1 span { color: var(--lake-light); }
+  .tagline {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    font-weight: 300;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    animation: fade-up 0.9s 0.35s ease both;
+  }
+  .footer-links { font-size: 13px; color: var(--text-muted); animation: fade-up 0.9s 0.45s ease both; }
+  .footer-links a { color: var(--lake-light); text-decoration: none; }
+  .footer-links a:hover { text-decoration: underline; }
+  .icon-wrap { margin-bottom: 1.5rem; animation: fade-up 0.9s 0.05s ease both; }
+  .icon-wrap svg { width: 52px; height: 52px; opacity: 0.9; }
+</style>
+</head>
+<body>
+<div class="waves">
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="wave"></div>
+</div>
+<div class="container">
+  <div class="icon-wrap">
+    <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="52" height="52" rx="14" fill="rgba(27,108,168,0.35)"/>
+      <path d="M12 34 Q16 28 20 34 Q24 40 28 34 Q32 28 36 34 Q38 37 40 34" stroke="#4A9FD4" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M18 27 L26 18 L34 27" stroke="#4A9FD4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="22" y="22" width="8" height="8" rx="1" stroke="#4A9FD4" stroke-width="2"/>
+    </svg>
+  </div>
+  <div class="badge">Coming Soon</div>
+  <h1>Find Storage at the<br><span>Lake of the Ozarks</span></h1>
+  <p class="tagline">
+    Boat storage, self storage, RV storage — all in one place.<br>
+    We're putting the finishing touches on something great.
+  </p>
+  <p class="footer-links">
+    Questions? Email us at <a href="mailto:hello@findstoragelakeoftheozarks.com">hello@findstoragelakeoftheozarks.com</a>
+  </p>
+</div>
+</body>
+</html>
+
