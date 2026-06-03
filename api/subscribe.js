@@ -14,6 +14,7 @@ export default async function handler(req) {
   }
 
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const resendKey = process.env.RESEND_API_KEY;
 
   const supabaseRes = await fetch('https://ebwygacgiraschkmvefz.supabase.co/rest/v1/waitlist', {
     method: 'POST',
@@ -26,11 +27,28 @@ export default async function handler(req) {
     body: JSON.stringify({ email })
   });
 
-  const responseText = await supabaseRes.text();
+  if (supabaseRes.status === 409) {
+    return new Response(JSON.stringify({ error: 'Already signed up' }), { status: 409 });
+  }
 
-  return new Response(JSON.stringify({ 
-    status: supabaseRes.status, 
-    body: responseText,
-    keyLength: key ? key.length : 0
-  }), { status: 200 });
+  if (!supabaseRes.ok) {
+    const err = await supabaseRes.text();
+    return new Response(JSON.stringify({ error: err }), { status: 500 });
+  }
+
+  await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + resendKey
+    },
+    body: JSON.stringify({
+      from: 'Find Storage <hello@findstoragelakeoftheozarks.com>',
+      to: 'robin@findstoragelakeoftheozarks.com',
+      subject: 'New waitlist signup',
+      text: 'New signup: ' + email
+    })
+  });
+
+  return new Response(JSON.stringify({ success: true }), { status: 200 });
 }
