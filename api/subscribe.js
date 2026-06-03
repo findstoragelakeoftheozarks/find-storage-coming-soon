@@ -13,7 +13,7 @@ export default async function handler(req) {
     return new Response(JSON.stringify({ error: 'Bad request' }), { status: 400 });
   }
 
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+ const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   const resendKey = process.env.RESEND_API_KEY;
 
   const supabaseRes = await fetch('https://ebwygacgiraschkmvefz.supabase.co/rest/v1/waitlist', {
