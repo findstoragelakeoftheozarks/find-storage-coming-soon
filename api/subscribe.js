@@ -13,46 +13,24 @@ export default async function handler(req) {
     return new Response(JSON.stringify({ error: 'Bad request' }), { status: 400 });
   }
 
-  if (!email || !email.includes('@')) {
-    return new Response(JSON.stringify({ error: 'Invalid email' }), { status: 400 });
-  }
-
-  const anonKey = process.env.SUPABASE_ANON_KEY;
-  const resendKey = process.env.RESEND_API_KEY;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   const supabaseRes = await fetch('https://ebwygacgiraschkmvefz.supabase.co/rest/v1/waitlist', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'apikey': anonKey,
-      'Authorization': 'Bearer ' + anonKey,
+      'apikey': key,
+      'Authorization': 'Bearer ' + key,
       'Prefer': 'return=minimal'
     },
     body: JSON.stringify({ email })
   });
 
-  if (supabaseRes.status === 409) {
-    return new Response(JSON.stringify({ error: 'Already signed up' }), { status: 409 });
-  }
+  const responseText = await supabaseRes.text();
 
-  if (!supabaseRes.ok) {
-    const err = await supabaseRes.text();
-    return new Response(JSON.stringify({ error: err }), { status: 500 });
-  }
-
-  await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + resendKey
-    },
-    body: JSON.stringify({
-      from: 'Find Storage <hello@findstoragelakeoftheozarks.com>',
-      to: 'hello@findstoragelakeoftheozarks.com',
-      subject: 'New waitlist signup',
-      text: 'New signup: ' + email
-    })
-  });
-
-  return new Response(JSON.stringify({ success: true }), { status: 200 });
+  return new Response(JSON.stringify({ 
+    status: supabaseRes.status, 
+    body: responseText,
+    keyLength: key ? key.length : 0
+  }), { status: 200 });
 }
